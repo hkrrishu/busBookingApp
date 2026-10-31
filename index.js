@@ -1,18 +1,30 @@
 const express = require("express");
 const db = require("./utils/db-connection");
+
+const User = require("./models/users");
+const Bus = require("./models/buses");
+const Booking = require("./models/bookings");
+const Payment = require("./models/payments");
+
+const usersRoutes = require("./routes/usersRoutes");
 const busRoutes = require("./routes/busRoutes");
-const userRoutes = require("./routes/usersRoutes");
+
 const app = express();
 
 app.use(express.json());
 
 app.get("/", (req, res) => {
-  res.send("Bus Booking App is running");
+    res.send("Bus Booking App is running");
 });
 
-app.use("/users", userRoutes);
+app.use("/users", usersRoutes);
 app.use("/buses", busRoutes);
 
-app.listen(3000, () => {
-  console.log("Server is running on port 3000");
+db.sync({ force: false }).then(() => {
+    app.listen(3000, () => {
+        console.log("Server is running on port 3000");
+    });
+})
+.catch((err) => {
+    console.error("Error syncing database:", err);
 });
