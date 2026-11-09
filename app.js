@@ -11,6 +11,9 @@ const busRoutes = require("./routes/busRoutes");
 
 const app = express();
 
+//models
+require("./models");
+
 app.use(express.json());
 
 app.get("/", (req, res) => {
@@ -20,7 +23,7 @@ app.get("/", (req, res) => {
 app.use("/users", usersRoutes);
 app.use("/buses", busRoutes);
 
-db.sync({ force: false }).then(() => {
+db.sync({ alter: true }).then(() => {
     app.listen(3000, () => {
         console.log("Server is running on port 3000");
     });
@@ -28,3 +31,4 @@ db.sync({ force: false }).then(() => {
 .catch((err) => {
     console.error("Error syncing database:", err);
 });
+
