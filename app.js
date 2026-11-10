@@ -8,6 +8,7 @@ const Payment = require("./models/payments");
 
 const usersRoutes = require("./routes/usersRoutes");
 const busRoutes = require("./routes/busRoutes");
+const bookingRoutes = require("./routes/bookingRoutes");
 
 const app = express();
 
@@ -22,6 +23,7 @@ app.get("/", (req, res) => {
 
 app.use("/users", usersRoutes);
 app.use("/buses", busRoutes);
+app.use("/bookings", bookingRoutes);
 
 db.sync({ alter: true }).then(() => {
     app.listen(3000, () => {
